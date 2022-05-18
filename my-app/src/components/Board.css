@@ -1,0 +1,7 @@
+.boards-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  background-color: rgba(159, 158, 158, 0.86);
+}
