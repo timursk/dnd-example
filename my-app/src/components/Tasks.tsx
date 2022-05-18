@@ -11,7 +11,7 @@ const Tasks = ({tasksList}: Props) => {
     <div className='tasks-container'>
       {tasksList && tasksList.map((task) => {
         return (
-          <div className='task'>
+          <div key={task.id} className='task'>
             {task.title}
           </div>
         )
