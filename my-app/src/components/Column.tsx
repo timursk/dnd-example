@@ -74,19 +74,12 @@ const Column = ({item}: Props) => {
     setTasksList(items);
   }
 
-  // <div className="column">
-  //   <h2>{item.title}</h2>
-  //   <button onClick={handleAdd}>add task</button>
-
-  //   <Tasks tasksList={tasksList} />
-  // </div>
-
   return (
     <>
       <button onClick={handleAdd}>add task</button>
 
-      <DragDropContext onDragEnd={(r) => onDragEnd(r)}>
-      <Droppable droppableId="droppable">
+      <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="columns">
         {(provided, snapshot) => (
           <div
             {...provided.droppableProps}
@@ -115,7 +108,7 @@ const Column = ({item}: Props) => {
                 </Draggable>
               ))}
               {provided.placeholder}
-              
+
             </div>
           </div>
         )}
