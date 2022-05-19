@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { LegacyRef, useState } from 'react'
 import { IColumn } from './Board';
 import './Column.css';
 import Tasks from './Tasks';
@@ -33,14 +33,14 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "#535353" : "grey",
 
   // styles we need to apply on draggables
   ...draggableStyle
 });
 
 const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+  background: isDraggingOver ? "#8f8f8f" : "lightgrey",
   padding: grid,
   width: 250
 });
@@ -77,43 +77,43 @@ const Column = ({item}: Props) => {
   return (
     <>
       <button onClick={handleAdd}>add task</button>
-
-      <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="columns">
-        {(provided, snapshot) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
-          >
-            <div className='tasks-container'>
-              
-              {tasksList.map((item, index) => (
-                <Draggable key={item.id} draggableId={`${item.id}`} index={index}>
-                  {(provided, snapshot) => (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="columns">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+                className='tasks-container'
+              >
                   
-                      <div className='task'
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style
-                        )}  
-                      >
-                        {item.title}
-                      </div>
-                    
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
+                  {tasksList.map((item, index) => (
+                    <Draggable key={item.id} draggableId={`${item.id}`} index={index}>
+                      {(provided, snapshot) => (
+                      
+                          <div className='task'
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )}  
+                          >
+                            {item.title}
+                          </div>
+                        
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
 
-            </div>
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+                </div>
+
+                
+            )}
+          </Droppable>
+        </DragDropContext>
     </>
   )
 }
