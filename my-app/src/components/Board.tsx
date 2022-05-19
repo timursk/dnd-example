@@ -22,12 +22,6 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 
   //my styles 
 
-  display: 'flex',
-  height: '100vh',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  backgroundColor: 'rgba(159, 158, 158, 0.86)',
-  gap: '15px',
 
   // change background colour if dragging
   background: isDragging ? 'lightgreen' : 'grey',
