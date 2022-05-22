@@ -1,120 +1,55 @@
-import React, { LegacyRef, useState } from 'react'
-import { IColumn } from './Board';
-import './Column.css';
-import Tasks from './Tasks';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
-export type ITask = {
-  id: number;
-  title: string;
-}
+import React from 'react'
+import Task from './Task';
+import styled from '@emotion/styled';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 type Props = {
-  item: IColumn
+  column: any;
+  tasks: any;
+  index: number;
 }
 
-let id = 0;
+const Container = styled.div`
+  margin: 8px;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+`;
 
-// a little function to help us with reordering the result
-const reorder = (list: ITask[], startIndex: number, endIndex: number) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+const Title = styled.div`
+  padding: 8px;
+`;
+const TasksList = styled.div`
+  padding: 8px;
+`;
 
-  return result;
-};
 
-const grid = 8;
 
-const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? "#535353" : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle
-});
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "#8f8f8f" : "lightgrey",
-  padding: grid,
-  width: 250
-});
-
-const Column = ({item}: Props) => {
-  const [tasksList, setTasksList] = useState<ITask[]>([]);
-  
-
-  const handleAdd = () => {
-    const title = prompt('enter title') || '';
-    const task = {
-      id: ++id,
-      title,
-    }
-    setTasksList([...tasksList, task]);
-
-  }
-
-  const onDragEnd = (result: any) => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
-  
-    const items = reorder(
-      tasksList,
-      result.source.index,
-      result.destination.index
-    );
-  
-    setTasksList(items);
-  }
-
+const Column = ({column, tasks, index}: Props) => {
   return (
-    <>
-      <button onClick={handleAdd}>add task</button>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="columns">
-            {(provided, snapshot) => (
-              <div
-                {...provided.droppableProps}
+    <Draggable draggableId={column.id} index={index}>
+      {(provided) => (
+        <Container
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <Title {...provided.dragHandleProps}>{column.title}</Title>
+          <Droppable droppableId={column.id} type='task'>
+            {(provided) => (
+              <TasksList
                 ref={provided.innerRef}
-                style={getListStyle(snapshot.isDraggingOver)}
-                className='tasks-container'
+                {...provided.droppableProps}
               >
-                  
-                  {tasksList.map((item, index) => (
-                    <Draggable key={item.id} draggableId={`${item.id}`} index={index}>
-                      {(provided, snapshot) => (
-                      
-                          <div className='task'
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(
-                              snapshot.isDragging,
-                              provided.draggableProps.style
-                            )}  
-                          >
-                            {item.title}
-                          </div>
-                        
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-
-                </div>
-
-                
+                {tasks.map((task, index) => (
+                  <Task key={task.id} task={task} index={index} />
+                ))}
+    
+                {provided.placeholder}
+              </TasksList>
             )}
           </Droppable>
-        </DragDropContext>
-    </>
+        </Container>
+      )}
+    </Draggable>
   )
 }
 
