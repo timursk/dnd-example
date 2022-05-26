@@ -13,6 +13,8 @@ const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
+  width: 300px;
+  flex-shrink: 0;
 `;
 
 const Title = styled.div`
@@ -20,6 +22,8 @@ const Title = styled.div`
 `;
 const TasksList = styled.div`
   padding: 8px;
+  height: 200px;
+  overflow-y: auto;
 `;
 
 

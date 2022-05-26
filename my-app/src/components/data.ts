@@ -21,5 +21,23 @@ export const columnsFromBack = [
     ],
     // taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
   },
+  {
+    id: 'column-3',
+    title: 'Process',
+    tasks: [],
+    // taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
+  },
+  {
+    id: 'column-4',
+    title: 'Something',
+    tasks: [],
+    // taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
+  },
+  {
+    id: 'column-5',
+    title: 'Something',
+    tasks: [],
+    // taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
+  },
   // 'column-1': {}
 ];

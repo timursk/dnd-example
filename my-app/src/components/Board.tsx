@@ -8,6 +8,16 @@ type Props = {}
 
 const Container = styled.div`
   display: flex;
+  height: 90vh;
+  padding-top: 10vh;
+
+`;
+
+const TestDiv = styled.div`
+  width: 100%;
+  height: 10vh;
+  background: purple;
+  position: fixed;
 `;
 
 const Board = (props: Props) => {
@@ -51,24 +61,26 @@ const Board = (props: Props) => {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId='all-columns' direction='horizontal' type='column'>
-        {(provided) => (
-          <Container
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {columns.map((column, index) => {
-              const tasks = column.tasks;
-    
-              return <Column key={column.id} column={column} tasks={tasks} index={index} /> 
-            })}
-
-            {provided.placeholder}
-          </Container>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId='all-columns' direction='horizontal' type='column'>
+          {(provided) => (
+            <Container
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {columns.map((column, index) => {
+                const tasks = column.tasks;
+      
+                return <Column key={column.id} column={column} tasks={tasks} index={index} /> 
+              })}
+  
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   )
 }
 
